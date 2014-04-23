@@ -406,8 +406,11 @@
     },
     removeModel: function (model) {
       var selector = "[" + modelCidAttributeName + "=\"" + model.cid + "\"]",
-        el = this.$(selector)[0],
-        viewCid = el.getAttribute(viewCidAttributeName),
+        el = this.$(selector)[0];
+      if (!el) {
+        return this;
+      }
+      var viewCid = el.getAttribute(viewCidAttributeName),
         view = this.children[viewCid];
       view.remove();
       this.removeChild(view);

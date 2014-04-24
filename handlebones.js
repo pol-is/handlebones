@@ -389,12 +389,13 @@
         view.appendTo(this.el);
       } else {
         var previousModel = index > 0 ? this.collection.at(index - 1) : false,
-          insertionPoint;
-        if (!previousModel) {
           insertionPoint = this.el.firstChild;
-        } else {
+        if (previousModel) {
           var selector = "[" + modelCidAttributeName + "=\"" + previousModel.cid + "\"]";
-          insertionPoint = this.$(selector)[0].nextSibling;
+          var nextEl = this.$(selector)[0];
+          if (nextEl) {
+            insertionPoint = nextEl.nextSibling;
+          }
         }
         view.appendTo(_.bind(function () {
           this.el.insertBefore(view.el, insertionPoint);
